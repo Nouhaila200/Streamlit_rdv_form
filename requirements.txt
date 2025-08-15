@@ -1,2 +1,4 @@
 streamlit>=1.32
 huggingface_hub
+requests
+streamlit-lottie

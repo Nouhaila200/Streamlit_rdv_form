@@ -147,7 +147,7 @@ def load_css():
         """
         <style>
         .stApp {
-            background-image: url("https://raw.https://github.com/Nouhaila200/Streamlit_rdv_form/blob/main/background.jpg");
+            background-image: url("https://raw.github.com/Nouhaila200/Streamlit_rdv_form/blob/main/background.jpg");
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;

@@ -144,7 +144,7 @@ def load_css():
    
     with open("style.css") as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
-        st.markdown('<label style="color:#4a2c4a;font-weight:bold;">Nom :</label>', unsafe_allow_html=True)
+        
         st.markdown(
             """
             <style>
@@ -154,6 +154,14 @@ def load_css():
                 background-position: center;
                 background-repeat: no-repeat;
             }
+            .css-1okebmr e1fqkh3o2,  /* classe générée pour label, à ajuster si besoin */
+            .css-1v3fvcr e1fqkh3o2 {
+            color: #4a2c4a; /* violet foncé */
+            font-weight: bold;
+            font-family: 'Arial', sans-serif;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
             </style>
             """,
             unsafe_allow_html=True

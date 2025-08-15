@@ -148,7 +148,7 @@ def load_css():
         """
         <style>
         .stApp {
-            background-image: url("https://raw.github.com/Nouhaila200/Streamlit_rdv_form/blob/main/ChatGPT%20Image%2015%20ao%C3%BBt%202025%2C%2020_21_43.png");
+            background-image: url("https://raw.https://github.com/Nouhaila200/Streamlit_rdv_form/blob/main/aw-couleurs-motif-illustration_23-2149865874.avif");
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;

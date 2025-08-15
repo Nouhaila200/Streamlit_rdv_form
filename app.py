@@ -7,7 +7,8 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 # --- Configuration Hugging Face ---
-HF_TOKEN = os.environ.get("HF_TOKEN") or "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"
+HF_TOKEN = st.secrets["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"]
+
 client = InferenceClient(token=HF_TOKEN, provider="together")
 
 # --- Validation email ---

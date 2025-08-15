@@ -5,11 +5,21 @@ import re
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from PIL import Image
+
 
 # --- Configuration Hugging Face ---
 HF_TOKEN = st.secrets["hf_token"]
 SMTP_PASSWORD = st.secrets["smtp_password"]
 client = InferenceClient(token=HF_TOKEN, provider="together")
+
+
+# Chargement du favicon
+favicon = Image.open("favicon.png")
+st.set_page_config(page_title="Décodage intuitif avec Estelle Viguier", page_icon=favicon)
+
+st.markdown("<h1 style='text-align: center; color: #6a4e9f;'>Bienvenue chez Estelle Viguier !</h1>", unsafe_allow_html=True)
+
 
 # --- Validation email ---
 def validate_email(email):

@@ -110,7 +110,7 @@ Message utilisateur : {message}
         st.error(f"Erreur lors de l'envoi de l'email : {e}")
 
 # --- Streamlit UI ---
-st.title("Décodage intuitif avec Estelle Viguier")
+
 
 with st.form("form_decodage"):
     name = st.text_input("Nom complet :")

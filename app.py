@@ -156,7 +156,7 @@ def load_css():
             }
             label {
             color: #4a2c4a; /* violet foncé */
-            font-weight: bold;
+            font-weight: bolder;
             font-family: 'Arial', sans-serif;
             margin-bottom: 0.5rem;
             font-size: 1rem;

@@ -154,7 +154,7 @@ def load_css():
                 background-position: center;
                 background-repeat: no-repeat;
             }
-            label {
+            p {
             color: #4a2c4a;
             font-weight: bolder;
             font-family: 'Arial', sans-serif;

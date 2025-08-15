@@ -75,6 +75,7 @@ h1 {
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
     box-sizing: border-box;
     background-color: var(--cream-bg);
+    height : 100;
 }
 
 .stForm input:focus,

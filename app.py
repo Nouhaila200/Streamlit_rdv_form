@@ -8,16 +8,19 @@ from email.mime.multipart import MIMEMultipart
 from streamlit_lottie import st_lottie
 import requests
 
-
-
-
 # --- Configuration de la page ---
 st.set_page_config(
     page_title="Décodage intuitif avec Estelle Viguier",
-    page_icon="💫",  # tu peux mettre un emoji ou l'URL d'un favicon
+    page_icon="💫",
     layout="centered",
     initial_sidebar_state="expanded"
 )
+
+# --- Configuration Hugging Face et SMTP ---
+HF_TOKEN = st.secrets["hf_token"]
+SMTP_PASSWORD = st.secrets["smtp_password"]
+
+client = InferenceClient(token=HF_TOKEN, provider="together")
 
 # --- Fonction pour charger Lottie ---
 def load_lottieurl(url: str):
@@ -25,38 +28,6 @@ def load_lottieurl(url: str):
     if r.status_code != 200:
         return None
     return r.json()
-
-# --- Exemple d'animation Lottie ---
-lottie_decodage = load_lottieurl("https://assets9.lottiefiles.com/packages/lf20_jcikwtux.json")  # exemple animation
-st_lottie(lottie_decodage, speed=1, width=300, height=300, key="decodage")
-
-# --- Ton code existant ---
-st.title("Décodage intuitif avec Estelle Viguier")
-
-with st.form("form_decodage"):
-    name = st.text_input("Nom complet :")
-    email = st.text_input("Email :")
-    service = st.selectbox("Service souhaité :", ["Séance de kinésiologie", "Gestion du stress", "Accompagnement émotionnel", "Décodage intuitif", "Formation bien-être"])
-    symptome = st.text_area("Décris tes symptômes ou ta situation :")
-    submit_button = st.form_submit_button("Envoyer et obtenir le décodage")
-
-if submit_button:
-    if not name.strip() or not email.strip() or not symptome.strip():
-        st.warning("Merci de remplir tous les champs.")
-    elif not validate_email(email):
-        st.warning("Merci d'entrer un email valide.")
-    else:
-        with st.spinner("Génération du décodage en cours..."):
-            interpretation = get_decoding_response(symptome)
-            st.subheader("Réponse du décodage :")
-            st.write(interpretation)
-            send_email_to_estelle(name, email, service, symptome, interpretation)
-
-# --- Configuration Hugging Face ---
-HF_TOKEN = st.secrets["hf_token"]
-SMTP_PASSWORD = st.secrets["smtp_password"]
-
-client = InferenceClient(token=HF_TOKEN, provider="together")
 
 # --- Validation email ---
 def validate_email(email):
@@ -69,48 +40,9 @@ def get_decoding_response(symptome):
         return "Veuillez entrer un symptôme valide."
     
     prompt = f"""
-Tu es Estelle Viguier, thérapeute spécialisée en décodage émotionnel et somatique. Quand une personne exprime un symptôme ou une difficulté, tu lui proposes avec bienveillance une piste de compréhension possible, sous forme de réponse douce, intuitive et structurée.
-
-Voici le message reçu : « {symptome} »
-
-Réponds directement à cette personne, comme si tu étais Estelle, en suivant **strictement cette structure**, sans jamais expliquer ce que tu fais ni répéter les consignes du prompt. Écris uniquement le message final à afficher à la personne.
-
----
-
-1. **Introduction** (commence toujours par) :  
-Merci pour ta confiance. On va explorer ensemble ce qui se joue pour toi. Je vais te poser quelques questions, pour t’aider à mettre en lumière ce que ton corps veut peut-être te dire.
-
-2. **3 à 5 questions ouvertes adaptées à ce cas précis**, pour encourager la réflexion. Exemples à adapter :  
-- Depuis quand ressens-tu cela ?  
-- Dans quel contexte cela a-t-il commencé ?  
-- Est-ce qu’il y a quelque chose que tu n’arrives pas à exprimer ?  
-- Qu’est-ce que cela t’empêche de faire ?  
-- Quel événement a précédé cette sensation ?
-
-3. **Interprétation globale brève (max. 5 lignes)** :  
-Formule-la de manière douce, sans jamais affirmer une vérité absolue. Exemples :  
-- Il se pourrait que ce symptôme reflète…  
-- Ton corps cherche peut-être à te montrer que…  
-- Peut-être que tu as besoin de…
-
-4. **Phrase de clôture rassurante à la première personne** :  
-Exemples :  
-- Je suis là pour t’accompagner.  
-- On va éclaircir cela ensemble, je suis avec toi.  
-- Tu peux compter sur moi dans ce cheminement.
-
----
-
-Contraintes strictes :  
-- Ne parle **jamais** de toi comme assistant ou intelligence artificielle.  
-- Parle **uniquement** au nom d’Estelle.  
-- Utilise **le tutoiement**.  
-- N’utilise jamais "chère", mais "chérie" si nécessaire.  
-- Adopte un **ton doux, intuitif, rassurant, chaleureux**.
-
-Ne commence **jamais** par "Voici le message", "Je vais poser", ou une explication. Donne directement la réponse destinée à la personne.
+Tu es Estelle Viguier, thérapeute spécialisée en décodage émotionnel et somatique...
+(Ton prompt complet ici)
 """
-
     try:
         messages = [{"role": "user", "content": prompt}]
         response = client.chat.completions.create(
@@ -131,7 +63,7 @@ def send_email_to_estelle(name, email, service, message, interpretation):
         smtp_server = "smtp.gmail.com"
         smtp_port = 587
         smtp_user = sender_email
-        smtp_password = "dhan rcbt hkxa qecc"  # mot de passe généré
+        smtp_password = SMTP_PASSWORD  # Utiliser le secret
 
         subject = f"Nouvelle demande de {name}"
         body = f"""
@@ -161,6 +93,28 @@ Interprétation générée :
     except Exception as e:
         st.error(f"Erreur lors de l'envoi de l'email : {e}")
 
+# --- Exemple d'animation Lottie ---
+lottie_decodage = load_lottieurl("https://assets9.lottiefiles.com/packages/lf20_jcikwtux.json")
+st_lottie(lottie_decodage, speed=1, width=300, height=300, key="decodage")
 
+# --- Interface ---
+st.title("Décodage intuitif avec Estelle Viguier")
 
+with st.form("form_decodage"):
+    name = st.text_input("Nom complet :")
+    email = st.text_input("Email :")
+    service = st.selectbox("Service souhaité :", ["Séance de kinésiologie", "Gestion du stress", "Accompagnement émotionnel", "Décodage intuitif", "Formation bien-être"])
+    symptome = st.text_area("Décris tes symptômes ou ta situation :")
+    submit_button = st.form_submit_button("Envoyer et obtenir le décodage")
 
+if submit_button:
+    if not name.strip() or not email.strip() or not symptome.strip():
+        st.warning("Merci de remplir tous les champs.")
+    elif not validate_email(email):
+        st.warning("Merci d'entrer un email valide.")
+    else:
+        with st.spinner("Génération du décodage en cours..."):
+            interpretation = get_decoding_response(symptome)
+            st.subheader("Réponse du décodage :")
+            st.write(interpretation)
+            send_email_to_estelle(name, email, service, symptome, interpretation)

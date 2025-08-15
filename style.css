@@ -14,15 +14,9 @@
 label {
 /* Labels des champs de formulaire */
 label[data-baseweb="label"] {
-    font-weight: 700 !important; /* plus gras */
+    font-weight: 900 !important; /* plus gras */
     font-size: 16px !important;  /* taille du texte */
     color: #6a4e9f !important;   /* couleur personnalisée */
-}
-
-/* Optionnel : placeholder du texte dans les inputs */
-input, textarea, select {
-    font-size: 15px !important;
-    color: #333 !important;
 }
 
 

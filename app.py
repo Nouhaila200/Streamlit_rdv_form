@@ -142,5 +142,17 @@ if submit_button:
 def load_css():
     with open("style.css") as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+        st.markdown(
+    """
+    <style>
+    body {
+     
+        background-image: url("https://raw.githubusercontent.com/Nouhaila200/Streamlit_rdv_form/main/background.jpg");
+
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 load_css()

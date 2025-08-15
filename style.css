@@ -19,7 +19,7 @@
 
 body {
     animation: fondAnime 10s infinite alternate;
-    background-image: url('votre-image-de-fleurs-fuchsia.jpg');
+    background-image: url('background.jpg');
     background-size: cover;
     background-position: center;
     color: var(--violet-fonce);

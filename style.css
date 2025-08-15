@@ -1,1 +1,35 @@
+/* Espace entre les champs du formulaire */
+.stForm > div {
+    margin-bottom: 20px !important; /* espace entre chaque input */
+}
+
+/* Labels des champs */
+label[data-baseweb="label"] {
+    font-weight: 700 !important; /* plus gras */
+    font-size: 16px !important;
+    color: #6a4e9f !important;
+}
+
+/* Placeholder et texte des champs */
+input, textarea, select {
+    font-size: 15px !important;
+    color: #333 !important;
+}
+
+/* Bouton de soumission */
+.stButton button {
+    background-color: #ff00ff !important; /* couleur fuchsia */
+    color: white !important; /* texte blanc */
+    font-weight: 700 !important;
+    padding: 10px 20px !important;
+    border: none !important;
+    border-radius: 8px !important;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Effet au survol du bouton */
+.stButton button:hover {
+    background-color: #e600e6 !important; /* fuchsia plus foncé au survol */
+}
 

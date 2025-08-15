@@ -144,7 +144,38 @@ def load_css():
    
     with open("style.css") as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
-        
+        st.markdown(
+            """
+            <style>
+            .stApp {
+                background-image: url("https://raw.github.com/Nouhaila200/Streamlit_rdv_form/main/background.jpg");
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+            p {
+            color: #4a2c4a;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .stButton button {
+    background-color: #ff00ff !important;
+    color: white !important;
+    font-weight: bold !important;
+    padding: 10px 20px !important;
+    border-radius: 8px !important;
+    border: none !important;
+}
+
+.stForm > div {
+    margin-bottom: 20px !important;
+}
+            </style>
+            """,
+            unsafe_allow_html=True
+        )
 
 
 

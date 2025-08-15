@@ -126,3 +126,11 @@ if submit_button:
             st.subheader("Réponse du décodage :")
             st.write(interpretation)
             send_email_to_estelle(name, email, service, symptome, interpretation)
+
+
+# Chargement du fichier CSS
+def load_css():
+    with open("style.css") as f:
+        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+
+load_css()

@@ -121,7 +121,7 @@ st.title("Décodage intuitif avec Estelle Viguier")
 with st.form("form_decodage"):
     name = st.text_input("Nom complet :")
     email = st.text_input("Email :")
-    service = st.selectbox("Service souhaité :", ["Gestion du stress", "Accompagnement somatique", "Autre"])
+    service = st.selectbox("Service souhaité :", ["Séance de kinésiologie", "Gestion du stress", "Accompagnement émotionnel", "Décodage intuitif", "Formation bien-être"])
     symptome = st.text_area("Décris tes symptômes ou ta situation :")
     submit_button = st.form_submit_button("Envoyer et obtenir le décodage")
 

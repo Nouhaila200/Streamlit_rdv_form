@@ -161,12 +161,12 @@ def load_css():
         }
 
         button {
-    background-color: #ff00ff ;
-}
+           background-color: ##FF00FF ;
+           }
 
-.stForm > div {
-    margin-bottom: 20px !important;
-}
+        .stForm > div {
+            margin-bottom: 20px !important;
+        }
             </style>
             """,
             unsafe_allow_html=True

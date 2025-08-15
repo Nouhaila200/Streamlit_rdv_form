@@ -12,12 +12,19 @@
 }
 
 label {
-    color: #4a2c4a;
-    font-weight: bolder;
-    font-family: 'Arial', sans-serif;
-    margin-bottom: 0.5rem;
-    font-size: 1.5rem;
+/* Labels des champs de formulaire */
+label[data-baseweb="label"] {
+    font-weight: 700 !important; /* plus gras */
+    font-size: 16px !important;  /* taille du texte */
+    color: #6a4e9f !important;   /* couleur personnalisée */
 }
+
+/* Optionnel : placeholder du texte dans les inputs */
+input, textarea, select {
+    font-size: 15px !important;
+    color: #333 !important;
+}
+
 
 /* --- Animation de fond avec fleurs fuchsia --- */
 @keyframes fondAnime {

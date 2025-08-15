@@ -1,7 +1,7 @@
-/* --- CSS Variables for Enhanced Fuchsia Theme --- */
+/* --- CSS Variables for Sushia Theme --- */
 :root {
     --primary-fuchsia: #ff00ff; /* Main fuchsia color */
-    --dark-fuchsia: #c600c6; /* Darker fuchsia for hover/active states */
+    --dark-fuchsia: #c600c6; /* Darker fuchsia for hover/active */
     --light-fuchsia: #ff66ff; /* Lighter fuchsia for accents */
     --dark-purple: #4a2c4a; /* Complementary dark purple */
     --cream-bg: #f9f0f6; /* Creamy background */
@@ -11,9 +11,9 @@
     --font-family: 'Arial', 'Helvetica', sans-serif;
 }
 
-/* --- General Styles --- */
+/* --- Body with Timed Background Fade --- */
 body {
-    background: linear-gradient(180deg, var(--cream-bg) 0%, var(--light-purple) 100%); /* Subtle gradient for depth */
+    background-color: var(--cream-bg);
     color: var(--dark-purple);
     font-family: var(--font-family);
     line-height: 1.6;
@@ -22,13 +22,19 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    animation: fadeIn 1.5s ease-in-out;
+    animation: fadeIn 2s ease-in-out, backgroundFade 2s ease-in-out 5s forwards;
 }
 
-/* --- Fade Animation --- */
+/* --- Initial Fade-In Animation --- */
 @keyframes fadeIn {
     0% { opacity: 0; transform: translateY(10px); }
     100% { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Timed Background Fade --- */
+@keyframes backgroundFade {
+    0% { background-color: var(--cream-bg); }
+    100% { background-color: var(--light-purple); }
 }
 
 /* --- Page Title --- */
@@ -49,7 +55,7 @@ h1 {
 /* --- Form Styles --- */
 .stForm {
     background-color: var(--white);
-    border-radius: 10px;
+    border-radius: 8px;
     padding: 1.5rem;
     box-shadow: 0 4px 12px var(--shadow);
     margin: 1.5rem auto;
@@ -63,35 +69,25 @@ h1 {
     box-shadow: 0 6px 16px var(--shadow);
 }
 
+/* --- Unchanged Input Styles --- */
 .stForm input,
 .stForm select,
 .stForm textarea {
     width: 100%;
-    padding: 0.75rem;
-    margin: 0.75rem 0;
+    padding: 10px;
+    margin: 10px 0;
     border: 1px solid var(--light-purple);
-    border-radius: 6px;
+    border-radius: 4px;
     font-size: 1rem;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    box-sizing: border-box;
-    background-color: var(--cream-bg);
-    height : 100;
 }
 
-.stForm input:focus,
-.stForm select:focus,
-.stForm textarea:focus {
-    outline: none;
-    border-color: var(--light-fuchsia);
-    box-shadow: 0 0 6px var(--light-fuchsia);
-}
-
+/* --- Button Styles --- */
 .stForm button {
     background: linear-gradient(45deg, var(--primary-fuchsia), var(--light-fuchsia));
     color: var(--white);
     border: none;
     padding: 0.75rem 1.5rem;
-    border-radius: 6px;
+    border-radius: 4px;
     font-size: 1.1rem;
     cursor: pointer;
     width: 100%;
@@ -111,7 +107,7 @@ h1 {
 /* --- Response Section --- */
 .stResponse {
     background-color: var(--white);
-    border-left: 6px solid var(--primary-fuchsia);
+    border-left: 5px solid var(--primary-fuchsia);
     padding: 1.5rem;
     margin: 1.5rem auto;
     max-width: min(90%, 600px);

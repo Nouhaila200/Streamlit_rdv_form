@@ -21,7 +21,7 @@
 
 body {
     animation: fondAnime 10s infinite alternate;
-    background-image: url("https://github.com/Nouhaila200/Streamlit_rdv_form/blob/main/background.jpg");
+    background-image: url("https://raw.githubusercontent.com/Nouhaila200/Streamlit_rdv_form/main/background.jpg");
     background-size: cover;
     background-color: transparent;
     background-position: center;

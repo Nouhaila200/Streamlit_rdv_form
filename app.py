@@ -138,21 +138,25 @@ if submit_button:
             send_email_to_estelle(name, email, service, symptome, interpretation)
 
 
+
 # Chargement du fichier CSS
 def load_css():
     with open("style.css") as f:
-        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
-        st.markdown(
-    """
-    <style>
-    body {
-     
-        background-image: url("https://raw.githubusercontent.com/Nouhaila200/Streamlit_rdv_form/main/background.jpg");
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+    st.markdown(
+        """
+        <style>
+        .stApp {
+            background-image: url("https://raw.githubusercontent.com/Nouhaila200/Streamlit_rdv_form/main/background.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
 
 load_css()
+

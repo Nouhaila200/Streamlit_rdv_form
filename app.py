@@ -160,13 +160,8 @@ def load_css():
             font-size: 1rem;
         }
 
-        .stButton button {
-    background-color: #ff00ff !important;
-    color: white !important;
-    font-weight: bold !important;
-    padding: 10px 20px !important;
-    border-radius: 8px !important;
-    border: none !important;
+        button {
+    background-color: #ff00ff ;
 }
 
 .stForm > div {

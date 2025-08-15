@@ -154,8 +154,7 @@ def load_css():
                 background-position: center;
                 background-repeat: no-repeat;
             }
-            .css-1okebmr e1fqkh3o2,  /* classe générée pour label, à ajuster si besoin */
-            .css-1v3fvcr e1fqkh3o2 {
+            label {
             color: #4a2c4a; /* violet foncé */
             font-weight: bold;
             font-family: 'Arial', sans-serif;

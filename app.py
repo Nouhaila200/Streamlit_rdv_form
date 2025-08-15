@@ -156,8 +156,8 @@ def load_css():
             p {
             color: #4a2c4a;
             font-weight: bold;
-            margin-bottom: 0.5rem;
-            font-size: 1rem;
+            margin-bottom: 1rem;
+            font-size: 2rem;
         }
 
        button.css-18ni7ap.e8zbici2 {

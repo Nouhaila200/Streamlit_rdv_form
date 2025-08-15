@@ -142,22 +142,22 @@ if submit_button:
 # Chargement du fichier CSS
 def load_css():
    
-
-    st.markdown(
-        """
-        <style>
-        .stApp {
-            background-image: url("https://raw.github.com/Nouhaila200/Streamlit_rdv_form/blob/main/background.jpg");
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
     with open("style.css") as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+        st.markdown(
+            """
+            <style>
+            .stApp {
+                background-image: url("https://raw.github.com/Nouhaila200/Streamlit_rdv_form/blob/main/background.jpg");
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+            </style>
+            """,
+            unsafe_allow_html=True
+        )
+
 
 load_css()
 

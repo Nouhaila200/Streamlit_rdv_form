@@ -148,7 +148,7 @@ def load_css():
         """
         <style>
         .stApp {
-            background-image: url("https://raw.https://github.com/Nouhaila200/Streamlit_rdv_form/blob/main/aw-couleurs-motif-illustration_23-2149865874.avif");
+            background-image: url("https://raw.https://github.com/Nouhaila200/Streamlit_rdv_form/blob/main/background.jpg");
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;

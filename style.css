@@ -22,7 +22,7 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    animation: fadeIn 2s ease-in-out, backgroundFade 2s ease-in-out 5s forwards;
+   
 }
 
 /* --- Initial Fade-In Animation --- */

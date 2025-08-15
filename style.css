@@ -19,7 +19,7 @@
 
 body {
     animation: fondAnime 10s infinite alternate;
-    background-image: url('background.jpg');
+    background-image:  "background.jpg" ; /* Mets ici un lien public vers ton image */
     background-size: cover;
     background-position: center;
     color: var(--violet-fonce);

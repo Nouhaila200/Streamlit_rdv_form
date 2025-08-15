@@ -11,7 +11,7 @@
     --police-principale: 'Arial', sans-serif;
 }
 
-label {
+p {
 /* Labels des champs de formulaire */
 label[data-baseweb="label"] {
     font-weight: 900 !important; /* plus gras */

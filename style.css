@@ -17,11 +17,13 @@
     100% { background-color: var(--fuchsia-clair); }
 }
 
+
+
 body {
     animation: fondAnime 10s infinite alternate;
-    background-image: url("https://raw.githubusercontent.com/<user>/<repo>/<branche>/background.jpg");; /* Mets ici un lien public vers ton image */
+    background-image: url("https://github.com/Nouhaila200/Streamlit_rdv_form/blob/main/background.jpg");
     background-size: cover;
-    background-color: none;
+    background-color: transparent;
     background-position: center;
     color: var(--violet-fonce);
     font-family: var(--police-principale);
@@ -32,6 +34,9 @@ body {
     display: flex;
     flex-direction: column;
 }
+
+
+
 
 /* --- Animation de texte ligne par ligne --- */
 @keyframes afficherLignes {

@@ -21,6 +21,7 @@ body {
     animation: fondAnime 10s infinite alternate;
     background-image: url("https://github.com/Nouhaila200/Streamlit_rdv_form/blob/main/background.jpg") ; /* Mets ici un lien public vers ton image */
     background-size: cover;
+    background-color: none;
     background-position: center;
     color: var(--violet-fonce);
     font-family: var(--police-principale);

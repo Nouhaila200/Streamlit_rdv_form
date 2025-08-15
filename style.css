@@ -18,6 +18,14 @@
 }
 
 
+/* --- Style pour les labels Streamlit --- */
+.css-1aumxhk e1fqkh3o2,  /* exemple de classe générée pour labels */
+.css-1v3fvcr e1fqkh3o2 {
+    color: var(--violet-fonce) !important;
+    font-weight: bold !important;
+    font-family: var(--police-principale) !important;
+    margin-bottom: 0.5rem !important;
+}
 
 
 

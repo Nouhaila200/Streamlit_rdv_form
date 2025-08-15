@@ -8,6 +8,7 @@ from email.mime.multipart import MIMEMultipart
 
 # --- Configuration Hugging Face ---
 HF_TOKEN = st.secrets["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"]
+smtp_password = st.secrets["dhan rcbt hkxa qecc"]
 
 client = InferenceClient(token=HF_TOKEN, provider="together")
 

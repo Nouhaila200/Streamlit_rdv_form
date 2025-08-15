@@ -52,34 +52,6 @@ h1 {
     color: transparent;
 }
 
-/* --- Form Styles --- */
-.stForm {
-    background-color: var(--white);
-    border-radius: 8px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 12px var(--shadow);
-    margin: 1.5rem auto;
-    max-width: min(90%, 600px);
-    border: 1px solid var(--light-fuchsia);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.stForm:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 16px var(--shadow);
-}
-
-/* --- Unchanged Input Styles --- */
-.stForm input,
-.stForm select,
-.stForm textarea {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid var(--light-purple);
-    border-radius: 4px;
-    font-size: 1rem;
-}
 
 /* --- Button Styles --- */
 .stForm button {

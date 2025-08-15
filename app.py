@@ -161,24 +161,6 @@ Interprétation générée :
     except Exception as e:
         st.error(f"Erreur lors de l'envoi de l'email : {e}")
 
-# --- Streamlit UI ---
-st.title("Décodage intuitif avec Estelle Viguier")
 
-with st.form("form_decodage"):
-    name = st.text_input("Nom complet :")
-    email = st.text_input("Email :")
-    service = st.selectbox("Service souhaité :", ["Séance de kinésiologie", "Gestion du stress", "Accompagnement émotionnel", "Décodage intuitif", "Formation bien-être"])
-    symptome = st.text_area("Décris tes symptômes ou ta situation :")
-    submit_button = st.form_submit_button("Envoyer et obtenir le décodage")
 
-if submit_button:
-    if not name.strip() or not email.strip() or not symptome.strip():
-        st.warning("Merci de remplir tous les champs.")
-    elif not validate_email(email):
-        st.warning("Merci d'entrer un email valide.")
-    else:
-        with st.spinner("Génération du décodage en cours..."):
-            interpretation = get_decoding_response(symptome)
-            st.subheader("Réponse du décodage :")
-            st.write(interpretation)
-            send_email_to_estelle(name, email, service, symptome, interpretation)
+

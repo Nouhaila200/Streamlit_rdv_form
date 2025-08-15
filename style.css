@@ -19,21 +19,6 @@
 
 
 
-body {
-    animation: fondAnime 10s infinite alternate;
-    background-image: url("https://raw.githubusercontent.com/Nouhaila200/Streamlit_rdv_form/main/background.jpg");
-    background-size: cover;
-    background-color: transparent;
-    background-position: center;
-    color: var(--violet-fonce);
-    font-family: var(--police-principale);
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
 
 
 

@@ -160,4 +160,22 @@ def load_css():
 
 
 load_css()
+def set_background(url):
+    st.markdown(
+        f"""
+        <style>
+        .stApp {{
+            background-image: url("{url}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+# Appelle la fonction avec le lien de ton image
+set_background("https://raw.githubusercontent.com/Nouhaila200/Streamlit_rdv_form/main/background.jpg")
+
 

@@ -155,7 +155,7 @@ def load_css():
                 background-repeat: no-repeat;
             }
             label {
-            color: #4a2c4a; /* violet foncé */
+            color: #4a2c4a;
             font-weight: bolder;
             font-family: 'Arial', sans-serif;
             margin-bottom: 0.5rem;

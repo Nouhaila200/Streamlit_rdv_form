@@ -67,7 +67,7 @@ Ne commence **jamais** par "Voici le message", "Je vais poser", ou une explicati
         response = client.chat.completions.create(
             messages=messages,
             model="NousResearch/Nous-Hermes-2-Mixtral-8x7B-DPO",
-            max_tokens=300,
+            max_tokens=800,
             temperature=0.7
         )
         return response.choices[0].message.content.strip()

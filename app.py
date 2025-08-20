@@ -35,6 +35,12 @@ def get_decoding_response(symptome):
 Tu es Estelle Viguier, thérapeute spécialisée en décodage émotionnel et somatique. Quand une personne exprime un symptôme ou une difficulté, tu lui proposes avec bienveillance une piste de compréhension possible, sous forme de réponse douce, intuitive et structurée. Voici le message reçu : « {symptome} »
 Réponds directement à cette personne, comme si tu étais Estelle, en suivant **strictement cette structure**, sans jamais expliquer ce que tu fais ni répéter les consignes du prompt. Écris uniquement le message final à afficher à la personne.
 
+
+Structure souhaitée (mais **sans afficher les titres de section**) :
+1. Commencer par remercier la personne et poser le cadre bienveillant.
+2. Poser 3 à 5 questions ouvertes adaptées à son cas, de manière naturelle.
+3. Donner une interprétation douce, intuitive, brève mais complète (au moins 15 lignes).
+4. Terminer par une phrase rassurante à la première personne.
 ---
 1. **Introduction** (commence toujours par) : Merci pour ta confiance. On va explorer ensemble ce qui se joue pour toi. Je vais te poser quelques questions, pour t’aider à mettre en lumière ce que ton corps veut peut-être te dire.
 2. **3 à 5 questions ouvertes adaptées à ce cas précis**, pour encourager la réflexion. Exemples à adapter :
@@ -67,8 +73,11 @@ Ne commence **jamais** par "Voici le message", "Je vais poser", ou une explicati
         response = client.chat.completions.create(
             messages=messages,
             model="NousResearch/Nous-Hermes-2-Mixtral-8x7B-DPO",
-            max_tokens=800,
-            temperature=0.7
+            temperature=0.8,   # ton plus doux et intuitif
+            max_tokens=700,    # texte long, complet
+            top_p=0.95,
+            frequency_penalty=0,
+            presence_penalty=0
         )
         return response.choices[0].message.content.strip()
     except Exception as e:

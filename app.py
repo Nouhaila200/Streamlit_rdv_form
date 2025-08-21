@@ -175,7 +175,7 @@ h3{
   color : #ff00A2;
 
 }
-.st-emotion-cache-r44huj {
+.st-emotion-cache-r44huj , .st-emotion-cache-r44huj p{
  color : black;
 
 }

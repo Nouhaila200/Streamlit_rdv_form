@@ -18,7 +18,7 @@ client = InferenceClient(token=HF_TOKEN, provider="together")
 favicon = Image.open("favicon.png")
 st.set_page_config(page_title="Décodage intuitif avec Estelle Viguier", page_icon=favicon)
 
-st.markdown("<h1 style='text-align: center; color: #6a4e9f;'>Bienvenue chez Estelle Viguier !</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center;'>Bienvenue chez Estelle Viguier !</h1>", unsafe_allow_html=True)
 
 
 # --- Validation email ---

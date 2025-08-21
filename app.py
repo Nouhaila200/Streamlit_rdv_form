@@ -159,7 +159,7 @@ def load_css():
                 background-repeat: no-repeat;
             }
             p {
-            color: #4a2c4a;
+            color: #ff00A2;
             font-weight: bold;
             margin-bottom: 1rem;
             font-size: 2rem;

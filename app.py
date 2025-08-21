@@ -171,7 +171,10 @@ def load_css():
     font-weight: bold !important;
     border-radius: 8px !important;
 }
+h1{
+  color : #ff00A2;
 
+}
         .stForm > div {
             margin-bottom: 20px !important;
         }

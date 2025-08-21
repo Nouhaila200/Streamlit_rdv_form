@@ -171,8 +171,12 @@ def load_css():
     font-weight: bold !important;
     border-radius: 8px !important;
 }
-h1{
+h3{
   color : #ff00A2;
+
+}
+.st-emotion-cache-r44huj {
+ color : black;
 
 }
         .stForm > div {

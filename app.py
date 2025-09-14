@@ -68,7 +68,7 @@ Ne commence **jamais** par "Voici le message", "Je vais poser", ou une explicati
         messages = [{"role": "user", "content": prompt}]
         response = client.chat.completions.create(
             messages=messages,
-            model="NousResearch/Nous-Hermes-2-Mixtral-8x7B-DPO",
+            model="mistralai/Mixtral-8x7B-Instruct-v0.1",
             temperature=0.8,   # ton plus doux et intuitif
             max_tokens=700,    # texte long, complet
             top_p=0.95,

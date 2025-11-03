@@ -44,7 +44,7 @@ Réponds directement à cette personne, comme si tu étais Estelle, en suivant *
 - Est-ce qu’il y a quelque chose que tu n’arrives pas à exprimer ?
 - Qu’est-ce que cela t’empêche de faire ?
 - Quel événement a précédé cette sensation ?
-3. **Interprétation globale  (min. 15 lignes)** : Formule-la de manière douce, sans jamais affirmer une vérité absolue. Exemples :
+3. **Interprétation globale  (min. 15 lignes)** : Formule-la de manière douce, sans jamais affirmer une vérité absolue. Exemples :
 - Il se pourrait que ce symptôme reflète…
 - Ton corps cherche peut-être à te montrer que…
 - Peut-être que tu as besoin de…
@@ -69,8 +69,8 @@ Ne commence **jamais** par "Voici le message", "Je vais poser", ou une explicati
         response = client.chat.completions.create(
             messages=messages,
             model="mistralai/Mixtral-8x7B-Instruct-v0.1",
-            temperature=0.8,   # ton plus doux et intuitif
-            max_tokens=700,    # texte long, complet
+            temperature=0.8,    # ton plus doux et intuitif
+            max_tokens=700,     # texte long, complet
             top_p=0.95,
             frequency_penalty=0,
             presence_penalty=0
@@ -87,6 +87,7 @@ def send_email_to_estelle(name, email, service, message, interpretation):
         smtp_server = "smtp.gmail.com"
         smtp_port = 587
         smtp_user = sender_email
+        # smtp_password = st.secrets["smtp_password"] # Utilise la variable st.secrets pour le mot de passe réel
         smtp_password = "dhan rcbt hkxa qecc"  # mot de passe généré
 
         subject = f"Nouvelle demande de {name}"
@@ -109,7 +110,7 @@ Message utilisateur : {message}
             server.starttls()
             server.login(smtp_user, smtp_password)
             server.send_message(msg)
-        
+            
         st.success("Email envoyé à Estelle avec succès !")
     except Exception as e:
         st.error(f"Erreur lors de l'envoi de l'email : {e}")
@@ -146,42 +147,44 @@ if submit_button:
 
 # Chargement du fichier CSS
 def load_css():
-   
+    
     with open("style.css") as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
         st.markdown(
             """
             <style>
             .stApp {
-                background-image: url("https://raw.github.com/Nouhaila200/Streamlit_rdv_form/main/background.jpg");
-                background-size: cover;
-                background-position: center;
-                background-repeat: no-repeat;
+                /* Suppression de l'image de fond */
+                background-image: none;
+                background-color: initial; /* Utilise la couleur de fond par défaut de Streamlit */
+                background-size: initial; 
+                background-position: initial; 
+                background-repeat: initial; 
             }
             p {
             color: #ff00A2;
             font-weight: bold;
             margin-bottom: 1.1rem;
             font-size: 2.2rem;
-        }
+            }
 
-       button.css-18ni7ap.e8zbici2 {
-    background-color: #ff00ff !important;
-    color: white !important;
-    font-weight: bold !important;
-    border-radius: 8px !important;
-}
-h3{
-  color : #ff00A2;
+            button.css-18ni7ap.e8zbici2 {
+            background-color: #ff00ff !important;
+            color: white !important;
+            font-weight: bold !important;
+            border-radius: 8px !important;
+            }
+            h3{
+            color : #ff00A2;
 
-}
-.st-emotion-cache-r44huj {
- color : black;
+            }
+            .st-emotion-cache-r44huj {
+            color : black;
 
-}
-        .stForm > div {
-            margin-bottom: 20px !important;
-        }
+            }
+            .stForm > div {
+                margin-bottom: 20px !important;
+            }
             </style>
             """,
             unsafe_allow_html=True
@@ -190,6 +193,3 @@ h3{
 
 
 load_css()
-
-
-

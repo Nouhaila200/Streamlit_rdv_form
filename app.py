@@ -1,5 +1,4 @@
 import streamlit as st
-import os
 from huggingface_hub import InferenceClient
 import re
 import smtplib
@@ -7,19 +6,18 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from PIL import Image
 
-
 # --- Configuration Hugging Face ---
 HF_TOKEN = st.secrets["hf_token"]
 SMTP_PASSWORD = st.secrets["smtp_password"]
-client = InferenceClient(token=HF_TOKEN)
 
+# Crée le client directement avec le modèle Mistral 7B Instruct
+client = InferenceClient("mistralai/Mistral-7B-Instruct-v0.2", token=HF_TOKEN)
 
 # Chargement du favicon
 favicon = Image.open("favicon.png")
 st.set_page_config(page_title="Décodage intuitif avec Estelle Viguier", page_icon=favicon)
 
 st.markdown("<h1 style='text-align: center;'>Bienvenue chez Estelle Viguier !</h1>", unsafe_allow_html=True)
-
 
 # --- Validation email ---
 def validate_email(email):
@@ -33,49 +31,24 @@ def get_decoding_response(symptome):
 
     prompt = f"""
 Tu es Estelle Viguier, thérapeute spécialisée en décodage émotionnel et somatique. Quand une personne exprime un symptôme ou une difficulté, tu lui proposes avec bienveillance une piste de compréhension possible, sous forme de réponse douce, intuitive et structurée. Voici le message reçu : « {symptome} »
-Réponds directement à cette personne, comme si tu étais Estelle, en suivant **strictement cette structure**, sans jamais expliquer ce que tu fais ni répéter les consignes du prompt. Écris uniquement le message final à afficher à la personne.
-
-
----
-1. **Introduction** (commence toujours par) : Merci pour ta confiance. On va explorer ensemble ce qui se joue pour toi. Je vais te poser quelques questions, pour t’aider à mettre en lumière ce que ton corps veut peut-être te dire.
-2. **3 à 5 questions ouvertes adaptées à ce cas précis**, pour encourager la réflexion. Exemples à adapter :
-- Depuis quand ressens-tu cela ?
-- Dans quel contexte cela a-t-il commencé ?
-- Est-ce qu’il y a quelque chose que tu n’arrives pas à exprimer ?
-- Qu’est-ce que cela t’empêche de faire ?
-- Quel événement a précédé cette sensation ?
-3. **Interprétation globale  (min. 15 lignes)** : Formule-la de manière douce, sans jamais affirmer une vérité absolue. Exemples :
-- Il se pourrait que ce symptôme reflète…
-- Ton corps cherche peut-être à te montrer que…
-- Peut-être que tu as besoin de…
-4. **Phrase de clôture rassurante à la première personne** : Exemples :
-- Je suis là pour t’accompagner.
-- On va éclaircir cela ensemble, je suis avec toi.
-- Tu peux compter sur moi dans ce cheminement.
+Réponds directement à cette personne, comme si tu étais Estelle, en suivant strictement cette structure, sans jamais expliquer ce que tu fais ni répéter les consignes du prompt. Écris uniquement le message final à afficher à la personne.
 
 ---
-Contraintes strictes :
-- Ne parle **jamais** de toi comme assistant ou intelligence artificielle.
-- Parle **uniquement** au nom d’Estelle.
-- Utilise **le tutoiement**.
-- N’utilise jamais "chère", mais "chérie" si nécessaire.
-- Adopte un **ton doux, intuitif, rassurant, chaleureux**.
-- N'écrit **jamais** les titres de chaque section de réponse dans la réponse finale déstinée au patient genre Introduction....
-Ne commence **jamais** par "Voici le message", "Je vais poser", ou une explication. Donne directement la réponse destinée à la personne.
+1. Introduction (commence toujours par) : Merci pour ta confiance. On va explorer ensemble ce qui se joue pour toi. Je vais te poser quelques questions, pour t’aider à mettre en lumière ce que ton corps veut peut-être te dire.
+2. 3 à 5 questions ouvertes adaptées à ce cas précis, pour encourager la réflexion.
+3. Interprétation globale (min. 15 lignes) : Formule-la de manière douce, sans jamais affirmer une vérité absolue.
+4. Phrase de clôture rassurante à la première personne.
 """
 
     try:
-        messages = [{"role": "user", "content": prompt}]
-        response = client.chat.completions.create(
-            messages=messages,
-            model="mistralai/Mistral-7B-Instruct-v0.2",
-            temperature=0.8,    # ton plus doux et intuitif
-            max_tokens=700,     # texte long, complet
+        response = client.text_generation(
+            prompt,
+            max_new_tokens=700,
+            temperature=0.8,
             top_p=0.95,
-            frequency_penalty=0,
-            presence_penalty=0
         )
-        return response.choices[0].message.content.strip()
+        # 'generated_text' contient le texte final
+        return response.generated_text.strip()
     except Exception as e:
         return f"Erreur de connexion au service de décodage : {e}"
 
@@ -87,8 +60,7 @@ def send_email_to_estelle(name, email, service, message, interpretation):
         smtp_server = "smtp.gmail.com"
         smtp_port = 587
         smtp_user = sender_email
-        # smtp_password = st.secrets["smtp_password"] # Utilise la variable st.secrets pour le mot de passe réel
-        smtp_password = "dhan rcbt hkxa qecc"  # mot de passe généré
+        smtp_password = SMTP_PASSWORD  # Utilisation du secret Streamlit
 
         subject = f"Nouvelle demande de {name}"
         body = f"""
@@ -97,7 +69,7 @@ Email : {email}
 Service : {service}
 Message utilisateur : {message}
 
---- Interprétation générée :
+--- Interprétation générée ---
 {interpretation}
 """
         msg = MIMEMultipart()
@@ -116,8 +88,6 @@ Message utilisateur : {message}
         st.error(f"Erreur lors de l'envoi de l'email : {e}")
 
 # --- Streamlit UI ---
-
-
 with st.form("form_decodage"):
     name = st.text_input("Nom complet :")
     email = st.text_input("Email :")
@@ -143,53 +113,19 @@ if submit_button:
             st.write(interpretation)
             send_email_to_estelle(name, email, service, symptome, interpretation)
 
-
-
-# Chargement du fichier CSS
+# --- CSS ---
 def load_css():
-    
     with open("style.css") as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
-        st.markdown(
-            """
-            <style>
-            .stApp {
-                /* Suppression de l'image de fond */
-                background-image: none;
-                background-color: initial; /* Utilise la couleur de fond par défaut de Streamlit */
-                background-size: initial; 
-                background-position: initial; 
-                background-repeat: initial; 
-            }
-            p {
-            color: #ff00A2;
-            font-weight: bold;
-            margin-bottom: 1.1rem;
-            font-size: 2.2rem;
-            }
-
-            button.css-18ni7ap.e8zbici2 {
-            background-color: #ff00ff !important;
-            color: white !important;
-            font-weight: bold !important;
-            border-radius: 8px !important;
-            }
-            h3{
-            color : #ff00A2;
-
-            }
-            .st-emotion-cache-r44huj {
-            color : black;
-
-            }
-            .stForm > div {
-                margin-bottom: 20px !important;
-            }
-            </style>
-            """,
-            unsafe_allow_html=True
-        )
-
-
+        st.markdown("""
+        <style>
+        .stApp { background-image: none; background-color: initial; }
+        p { color: #ff00A2; font-weight: bold; margin-bottom: 1.1rem; font-size: 2.2rem; }
+        button.css-18ni7ap.e8zbici2 { background-color: #ff00ff !important; color: white !important; font-weight: bold !important; border-radius: 8px !important; }
+        h3 { color: #ff00A2; }
+        .st-emotion-cache-r44huj { color: black; }
+        .stForm > div { margin-bottom: 20px !important; }
+        </style>
+        """, unsafe_allow_html=True)
 
 load_css()

@@ -15,7 +15,7 @@ SMTP_PASSWORD = st.secrets["smtp_password"]
 
 #
 client = InferenceClient(
-    "mistralai/Mixtral-8x7B-Instruct-v0.1",
+    "mistralai/Mixtral-8x7B-Instruct",
     token=HF_TOKEN
 )
 

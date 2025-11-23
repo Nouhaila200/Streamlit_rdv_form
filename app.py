@@ -11,7 +11,14 @@ from PIL import Image
 # --- Configuration Hugging Face ---
 HF_TOKEN = st.secrets["hf_token"]
 SMTP_PASSWORD = st.secrets["smtp_password"]
-client = InferenceClient(token=HF_TOKEN, provider="together")
+
+
+#
+client = InferenceClient(
+    "mistralai/Mixtral-8x7B-Instruct-v0.1",
+    token=HF_TOKEN
+)
+
 
 
 # Chargement du favicon
@@ -68,13 +75,13 @@ Ne commence **jamais** par "Voici le message", "Je vais poser", ou une explicati
         messages = [{"role": "user", "content": prompt}]
         response = client.chat.completions.create(
             messages=messages,
-            model="mistralai/Mixtral-8x7B-Instruct-v0.1",
-            temperature=0.8,    # ton plus doux et intuitif
-            max_tokens=700,     # texte long, complet
+            temperature=0.8,
+            max_tokens=700,
             top_p=0.95,
             frequency_penalty=0,
             presence_penalty=0
         )
+
         return response.choices[0].message.content.strip()
     except Exception as e:
         return f"Erreur de connexion au service de décodage : {e}"

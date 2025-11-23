@@ -41,14 +41,13 @@ Réponds directement à cette personne, comme si tu étais Estelle, en suivant s
 """
 
     try:
-        response = client.text_generation(
-            prompt,
-            max_new_tokens=700,
+        messages = [{"role": "user", "content": prompt}]
+        response = client.chat.completions.create(
+            messages=messages,
             temperature=0.8,
-            top_p=0.95,
+            max_tokens=700
         )
-        # 'generated_text' contient le texte final
-        return response.generated_text.strip()
+        return response.choices[0].message.content.strip()
     except Exception as e:
         return f"Erreur de connexion au service de décodage : {e}"
 

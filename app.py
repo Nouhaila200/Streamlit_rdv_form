@@ -10,7 +10,7 @@ from PIL import Image
 HF_TOKEN = st.secrets["hf_token"]
 SMTP_PASSWORD = st.secrets["smtp_password"]
 
-# Utilisation du modèle Mistral 7B Instruct en mode chat
+# Initialize Hugging Face InferenceClient
 client = InferenceClient(token=HF_TOKEN)
 
 # --- Chargement du favicon ---
@@ -29,7 +29,7 @@ def get_decoding_response(symptome):
         return "Veuillez entrer un symptôme valide."
 
     prompt = f"""
-Tu es Estelle Viguier, thérapeute spécialisée en décodage émotionnel et somatique. Quand une personne exprime un symptôme ou une difficulté, tu lui proposes avec bienveillance une piste de compréhension possible, sous forme de réponse douce, intuitive et structurée. Voici le message reçu : « {symptome} »
+Tu es Estelle Viguier, thérapeute spécialisée en décodage émotionnel et somatique. Quand une personne exprime un symptôme ou une difficulté, tu lui proposes avec bienveillance une piste de compréhension possible, sous forme de réponse douce, intuitive et structurée. Voici le message reçu : « {symptome} ».
 Réponds directement à cette personne, comme si tu étais Estelle, en suivant strictement cette structure, sans jamais expliquer ce que tu fais ni répéter les consignes du prompt. Écris uniquement le message final à afficher à la personne.
 
 ---
@@ -42,7 +42,7 @@ Réponds directement à cette personne, comme si tu étais Estelle, en suivant s
     try:
         messages = [{"role": "user", "content": prompt}]
         response = client.chat.completions.create(
-            model="mistralai/Mistral-7B-Instruct-v0.2",
+            model="NousResearch/Nous-Hermes-13B",
             messages=messages,
             temperature=0.8,
             max_tokens=700

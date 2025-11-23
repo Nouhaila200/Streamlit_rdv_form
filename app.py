@@ -7,49 +7,27 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from PIL import Image
 
+
 # --- Configuration Hugging Face ---
-# Les secrets doivent être définis dans votre environnement Streamlit (secrets.toml)
-# HF_TOKEN = st.secrets["hf_token"]
-# SMTP_PASSWORD = st.secrets["smtp_password"]
-
-# --- Simulation des secrets pour l'environnement Canvas ---
-# En production, assurez-vous que st.secrets est correctement configuré.
-try:
-    HF_TOKEN = st.secrets["hf_token"]
-except:
-    HF_TOKEN = "" # Placeholder, doit être remplacé par votre vrai token
-    st.warning("HF_TOKEN non trouvé dans les secrets. L'API LLM pourrait échouer.")
-    
-try:
-    SMTP_PASSWORD = st.secrets["smtp_password"]
-except:
-    SMTP_PASSWORD = "dhan rcbt hkxa qecc" # Utilisation du mot de passe fourni dans l'exemple, mais DOIT être sécurisé via secrets
-    st.warning("SMTP_PASSWORD non trouvé dans les secrets. Utilisation du mot de passe en clair pour l'exemple (non recommandé en production).")
-
+HF_TOKEN = st.secrets["hf_token"]
+SMTP_PASSWORD = st.secrets["smtp_password"]
 client = InferenceClient(token=HF_TOKEN, provider="together")
 
 
 # Chargement du favicon
-# NOTE : 'favicon.png' n'est pas inclus ici. Cette partie est commentée pour éviter une erreur de fichier manquant.
-# if os.path.exists("favicon.png"):
-#     favicon = Image.open("favicon.png")
-#     st.set_page_config(page_title="Décodage intuitif avec Estelle Viguier", page_icon=favicon)
-# else:
-st.set_page_config(page_title="Décodage intuitif avec Estelle Viguier")
-
+favicon = Image.open("favicon.png")
+st.set_page_config(page_title="Décodage intuitif avec Estelle Viguier", page_icon=favicon)
 
 st.markdown("<h1 style='text-align: center;'>Bienvenue chez Estelle Viguier !</h1>", unsafe_allow_html=True)
 
 
 # --- Validation email ---
 def validate_email(email):
-    """Valide le format de l'adresse email."""
     pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
     return bool(re.match(pattern, email))
 
 # --- Fonction Hugging Face ---
 def get_decoding_response(symptome):
-    """Génère la réponse de décodage émotionnel via l'API Hugging Face."""
     if not symptome.strip():
         return "Veuillez entrer un symptôme valide."
 
@@ -66,7 +44,7 @@ Réponds directement à cette personne, comme si tu étais Estelle, en suivant *
 - Est-ce qu’il y a quelque chose que tu n’arrives pas à exprimer ?
 - Qu’est-ce que cela t’empêche de faire ?
 - Quel événement a précédé cette sensation ?
-3. **Interprétation globale (min. 15 lignes)** : Formule-la de manière douce, sans jamais affirmer une vérité absolue. Exemples :
+3. **Interprétation globale  (min. 15 lignes)** : Formule-la de manière douce, sans jamais affirmer une vérité absolue. Exemples :
 - Il se pourrait que ce symptôme reflète…
 - Ton corps cherche peut-être à te montrer que…
 - Peut-être que tu as besoin de…
@@ -87,31 +65,29 @@ Ne commence **jamais** par "Voici le message", "Je vais poser", ou une explicati
 """
 
     try:
-        # CORRECTION : Changement de l'identifiant du modèle pour assurer la compatibilité avec Together
         messages = [{"role": "user", "content": prompt}]
         response = client.chat.completions.create(
             messages=messages,
-            model="mistralai/mixtral-8x7b-instruct-v0.1", # Identifiant corrigé
-            temperature=0.8,    # ton plus doux et intuitif
-            max_tokens=700,     # texte long, complet
+            model="mistralai/Mixtral-8x7B-Instruct-v0.1",
+            temperature=0.8,   # ton plus doux et intuitif
+            max_tokens=700,    # texte long, complet
             top_p=0.95,
             frequency_penalty=0,
             presence_penalty=0
         )
         return response.choices[0].message.content.strip()
     except Exception as e:
-        return f"Erreur de connexion au service de décodage : {e}. Vérifiez si HF_TOKEN est valide et si le modèle 'mistralai/mixtral-8x7b-instruct-v0.1' est pris en charge par Together."
+        return f"Erreur de connexion au service de décodage : {e}"
 
 # --- Fonction envoi email ---
 def send_email_to_estelle(name, email, service, message, interpretation):
-    """Envoie les informations de la demande et le décodage à Estelle."""
     try:
         sender_email = "contactestelleviguier@gmail.com"
-        receiver_email = "nouhailaourrad0@gmail.com" # L'adresse de réception est codée en dur.
+        receiver_email = "nouhailaourrad0@gmail.com"
         smtp_server = "smtp.gmail.com"
         smtp_port = 587
         smtp_user = sender_email
-        smtp_password = SMTP_PASSWORD # Utilise la variable chargée depuis st.secrets ou le placeholder
+        smtp_password = "dhan rcbt hkxa qecc"  # mot de passe généré
 
         subject = f"Nouvelle demande de {name}"
         body = f"""
@@ -133,10 +109,10 @@ Message utilisateur : {message}
             server.starttls()
             server.login(smtp_user, smtp_password)
             server.send_message(msg)
-            
+        
         st.success("Email envoyé à Estelle avec succès !")
     except Exception as e:
-        st.error(f"Erreur lors de l'envoi de l'email : {e}. Assurez-vous que les identifiants SMTP sont corrects.")
+        st.error(f"Erreur lors de l'envoi de l'email : {e}")
 
 # --- Streamlit UI ---
 
@@ -162,84 +138,58 @@ if submit_button:
     else:
         with st.spinner("Génération du décodage en cours..."):
             interpretation = get_decoding_response(symptome)
-            
-            # Affichage de la réponse uniquement si elle n'est pas un message d'erreur de connexion
-            if not interpretation.startswith("Erreur de connexion"):
-                 st.subheader("Réponse du décodage :")
-                 st.markdown(f"**{interpretation}**")
-                 send_email_to_estelle(name, email, service, symptome, interpretation)
-            else:
-                 st.error(interpretation)
+            st.subheader("Réponse du décodage :")
+            st.write(interpretation)
+            send_email_to_estelle(name, email, service, symptome, interpretation)
+
 
 
 # Chargement du fichier CSS
 def load_css():
-    # NOTE: 'style.css' n'est pas inclus ici. Le code utilise directement un bloc <style>.
-    # with open("style.css") as f:
-    #     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
-    
-    st.markdown(
-        """
-        <style>
-        /* Styles pour le fond d'écran et les polices */
-        .stApp {
-            background-image: url("https://raw.github.com/Nouhaila200/Streamlit_rdv_form/main/background.jpg");
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-        
-        /* Style pour les labels (p) */
-        p {
+   
+    with open("style.css") as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+        st.markdown(
+            """
+            <style>
+            .stApp {
+                # background-image: url("https://raw.github.com/Nouhaila200/Streamlit_rdv_form/main/background.jpg");
+                # background-size: cover;
+                # background-position: center;
+                # background-repeat: no-repeat;
+            }
+            p {
             color: #ff00A2;
             font-weight: bold;
             margin-bottom: 1.1rem;
-            font-size: 1.1rem; /* Ajusté pour une meilleure lisibilité */
-        }
-        
-        /* Style pour le bouton Envoyer et obtenir le décodage */
-        /* La classe exacte du bouton peut varier */
-        button {
-            background-color: #ff00ff !important;
-            color: white !important;
-            font-weight: bold !important;
-            border-radius: 8px !important;
+            font-size: 2.2rem;
         }
 
-        /* Style pour le sous-titre de la réponse */
-        h3, h2, h1 {
-            color : #ff00A2;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
-        }
-        
-        /* Correction : la classe .st-emotion-cache-r44huj est spécifique à l'environnement Streamlit. 
-        Utiliser un sélecteur plus générique pour le texte de la réponse si possible.
-        Ici, on cible le texte généré par st.write qui est un bloc markdown/div */
-        div.stMarkdown > div > p {
-            color: black;
-            font-weight: normal;
-            font-size: 1rem;
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 5px solid #ff00A2;
-        }
-        
-        /* Ajustement de la marge du formulaire */
+       button.css-18ni7ap.e8zbici2 {
+    background-color: #ff00ff !important;
+    color: white !important;
+    font-weight: bold !important;
+    border-radius: 8px !important;
+}
+h3{
+  color : #ff00A2;
+
+}
+.st-emotion-cache-r44huj {
+ color : black;
+
+}
         .stForm > div {
             margin-bottom: 20px !important;
         }
+            </style>
+            """,
+            unsafe_allow_html=True
+        )
 
-        /* Amélioration de l'input */
-        .stTextInput > div > div > input, .stTextArea > div > textarea {
-            border: 1px solid #ff00A2;
-            border-radius: 5px;
-            padding: 10px;
-        }
-        
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
+
 
 load_css()
+
+
+

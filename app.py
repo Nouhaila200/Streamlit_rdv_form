@@ -30,13 +30,13 @@ Tu es Estelle Viguier, thérapeute spécialisée en décodage émotionnel. Voici
 Réponds de manière douce, intuitive et rassurante, comme si tu parlais directement à la personne.
 """
     try:
-        response = client.text_generation.create(
+        response = client.text_generation(
             model="TheBloke/WizardLM-7B-uncensored-GPTQ",
             inputs=prompt,
             max_new_tokens=700,
             temperature=0.8
         )
-        return response.generated_text
+        return response[0].generated_text
     except Exception as e:
         return f"Erreur de connexion au service de décodage : {e}"
 

@@ -11,7 +11,7 @@ from PIL import Image
 # --- Configuration Hugging Face ---
 HF_TOKEN = st.secrets["hf_token"]
 SMTP_PASSWORD = st.secrets["smtp_password"]
-client = InferenceClient(token=HF_TOKEN, provider="together")
+client = InferenceClient(token=HF_TOKEN)
 
 
 # Chargement du favicon

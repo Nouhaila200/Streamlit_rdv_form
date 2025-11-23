@@ -83,7 +83,7 @@ Ne commence **jamais** par "Voici le message", "Je vais poser", ou une explicati
 def send_email_to_estelle(name, email, service, message, interpretation):
     try:
         sender_email = "contactestelleviguier@gmail.com"
-        receiver_email = "admestelleviguier@gmail.com"
+        receiver_email = "nouhailaourrad0@gmail.com"
         smtp_server = "smtp.gmail.com"
         smtp_port = 587
         smtp_user = sender_email

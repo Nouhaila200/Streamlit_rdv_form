@@ -42,7 +42,7 @@ Réponds directement à cette personne, comme si tu étais Estelle, en suivant s
     try:
         messages = [{"role": "user", "content": prompt}]
         response = client.chat.completions.create(
-            model="mistralai/Mistral-7B-Instruct-v0.2",
+            model="tiiuae/falcon-7b-instruct",
             messages=messages,
             temperature=0.8,
             max_tokens=700

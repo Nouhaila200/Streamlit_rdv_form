@@ -11,7 +11,7 @@ HF_TOKEN = st.secrets["hf_token"]
 SMTP_PASSWORD = st.secrets["smtp_password"]
 
 # Crée le client directement avec le modèle Mistral 7B Instruct
-client = InferenceClient("mistralai/Mistral-7B-Instruct-v0.2", token=HF_TOKEN)
+client = InferenceClient("mistralai/Mixtral-8x7B-Instruct-v0.1", token=HF_TOKEN)
 
 # Chargement du favicon
 favicon = Image.open("favicon.png")
